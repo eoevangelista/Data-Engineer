@@ -143,4 +143,4 @@ select top 3 * from mulheres
 ```
 
 The result is below:
-![ResultadoSQL](ResultadoSQL.png)
+![ResultadoSQL](./media/ResultadoSQL.png)
