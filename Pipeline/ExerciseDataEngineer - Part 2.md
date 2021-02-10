@@ -6,12 +6,12 @@
 In second part we need create the database SQL Server (free tier) in AWS.
 After that, The  SQL Server RDS Instance need see and read the files in S3.
 For this, follow this steps:
-1 - IAM Policy for access to S3 with this actions select: ListAllMyBuckets, ListBucket, GetBucketACL, GetBucketLocation, GetObject;
-2 - In Resources, add ARN for bucket (and object) and enter our S3 bucket name (igti-bootcamp-ed-2021-evangelista);
-3 - Create Role  to use the Policy we just created and attach permissions policies used before;
-4 - Associating your IAM role with your DB instance:
-  In this case, is necessary use a user that granted that permissions: AmazonRDSFullAccess and AmazonS3FullAccess
-  With this user logged, execute the AWS CLI command bellow:
+* 1 - IAM Policy for access to S3 with this actions select: ListAllMyBuckets, ListBucket, GetBucketACL, GetBucketLocation, GetObject;
+* 2 - In Resources, add ARN for bucket (and object) and enter our S3 bucket name (igti-bootcamp-ed-2021-evangelista);
+* 3 - Create Role  to use the Policy we just created and attach permissions policies used before;
+* 4 - Associating your IAM role with your DB instance:
+  *  _In this case, is necessary use a user that granted that permissions: AmazonRDSFullAccess and AmazonS3FullAccess_
+  *  With this user logged, execute the AWS CLI command bellow:
   
   ```
     aws rds add-role-to-db-instance ^
