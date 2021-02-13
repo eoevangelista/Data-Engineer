@@ -143,7 +143,7 @@ select top 3 * from mulheres
 ```
 
 The result is below:
-![ResultadoSQL](./media/ResultadoSQL.png)
+![ResultadoSQL](/Pipeline/media/ResultadoSQL.png)
 
 ### Because of the small size of the files, I don't need to create index/statistics for the tables (after import). 
 ### If the size of table was big, I could applied the partition and correct treatement for the columns (with the right column type), besides the indexes. 
