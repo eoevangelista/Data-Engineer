@@ -60,7 +60,7 @@ order by 2
 
 ## Which Brazilian state has the highest average schooling with women between 20 and 40 years old?
 ```sql
-select  top 1 UF, AVG(cast(LTrim(RTrim(anosesco)) as numeric(11,0))) as [Average schooling]
+select  top 1 UF, AVG(cast(LTrim(RTrim(anosesco)) as numeric(11,0))) as [Average Schooling]
 from    mulheres
 where   idade BETWEEN 20 and 40
 and     sexo = 'Mulher'
