@@ -76,6 +76,3 @@ def desafio_final_etl():
     wr_api   = write_to_sqlserver(api)
 
 desafio_final = desafio_final_etl()
-
-The result is below:
-![ExerciseAirFlow1](/Pipeline/media/ExerciseAirFlow1.png)
