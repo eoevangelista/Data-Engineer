@@ -13,7 +13,7 @@
 		},
 		"new-blob_properties_pipeline1_parameters_FileName": {
 			"type": "string",
-			"defaultValue": "@triggerBody().fileName"
+			"defaultValue": "@triggerBody().FileName"
 		},
 		"new-blob_properties_typeProperties_scope": {
 			"type": "string",
