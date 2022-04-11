@@ -2,7 +2,7 @@
 	"name": "new-blob",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Started",
+		"runtimeState": "Stopped",
 		"pipelines": [
 			{
 				"pipelineReference": {
@@ -10,7 +10,7 @@
 					"type": "PipelineReference"
 				},
 				"parameters": {
-					"FileName": "@triggerBody().fileName"
+					"FileName": "@triggerBody().FileName"
 				}
 			}
 		],
