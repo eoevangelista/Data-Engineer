@@ -11,11 +11,11 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
 		},
-		"new-blobevent_properties_pipeline1_parameters_FileName": {
+		"trigger1_properties_pipeline1_parameters_FileName": {
 			"type": "string",
 			"defaultValue": "@triggerBody().fileName"
 		},
-		"new-blobevent_properties_typeProperties_scope": {
+		"trigger1_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/c1c220f9-ee03-4e05-8c17-d6252e384214/resourceGroups/estudos/providers/Microsoft.Storage/storageAccounts/asftriggerdemo"
 		},
@@ -49,11 +49,11 @@
 					"AzureBlobStorage1_connectionString": {
 						"value": "[parameters('AzureBlobStorage1_connectionString')]"
 					},
-					"new-blobevent_properties_pipeline1_parameters_FileName": {
-						"value": "[parameters('new-blobevent_properties_pipeline1_parameters_FileName')]"
+					"trigger1_properties_pipeline1_parameters_FileName": {
+						"value": "[parameters('trigger1_properties_pipeline1_parameters_FileName')]"
 					},
-					"new-blobevent_properties_typeProperties_scope": {
-						"value": "[parameters('new-blobevent_properties_typeProperties_scope')]"
+					"trigger1_properties_typeProperties_scope": {
+						"value": "[parameters('trigger1_properties_typeProperties_scope')]"
 					}
 				}
 			},

@@ -11,11 +11,11 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
 		},
-		"new-blobevent_properties_pipeline1_parameters_FileName": {
+		"trigger1_properties_pipeline1_parameters_FileName": {
 			"type": "string",
 			"defaultValue": "@triggerBody().fileName"
 		},
-		"new-blobevent_properties_typeProperties_scope": {
+		"trigger1_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/c1c220f9-ee03-4e05-8c17-d6252e384214/resourceGroups/estudos/providers/Microsoft.Storage/storageAccounts/asftriggerdemo"
 		}
@@ -203,7 +203,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/new-blobevent')]",
+			"name": "[concat(parameters('factoryName'), '/trigger1')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -216,7 +216,7 @@
 							"type": "PipelineReference"
 						},
 						"parameters": {
-							"FileName": "[parameters('new-blobevent_properties_pipeline1_parameters_FileName')]"
+							"FileName": "[parameters('trigger1_properties_pipeline1_parameters_FileName')]"
 						}
 					}
 				],
@@ -224,7 +224,7 @@
 				"typeProperties": {
 					"blobPathBeginsWith": "/input/blobs/",
 					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('new-blobevent_properties_typeProperties_scope')]",
+					"scope": "[parameters('trigger1_properties_typeProperties_scope')]",
 					"events": [
 						"Microsoft.Storage.BlobCreated"
 					]
