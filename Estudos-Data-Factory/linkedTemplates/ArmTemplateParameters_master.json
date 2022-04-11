@@ -8,6 +8,12 @@
 		"AzureBlobStorage1_connectionString": {
 			"value": ""
 		},
+		"new-blob_properties_pipeline1_parameters_FileName": {
+			"value": "@triggerBody().fileName"
+		},
+		"new-blob_properties_typeProperties_scope": {
+			"value": "/subscriptions/c1c220f9-ee03-4e05-8c17-d6252e384214/resourceGroups/estudos/providers/Microsoft.Storage/storageAccounts/asftriggerdemo"
+		},
 		"containerUri": {
 			"value": ""
 		},
