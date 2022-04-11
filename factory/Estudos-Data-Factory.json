@@ -1,0 +1,9 @@
+{
+	"name": "Estudos-Data-Factory",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "50786d10-8839-4c47-b159-15e2659893fc",
+		"tenantId": "9d89e2a1-faaf-4d4e-91d4-37bb6eb4823c"
+	}
+}
