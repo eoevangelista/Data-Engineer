@@ -12,7 +12,15 @@
 					"name": "Movies"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "OutputMoviesCSV",
+						"type": "DatasetReference"
+					},
+					"name": "MoviesClean"
+				}
+			],
 			"transformations": [
 				{
 					"name": "YearExtraction"
@@ -28,7 +36,12 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> Movies",
 				"Movies derive(Year = toInteger(trim(right(title, 6), '()')),",
-				"          title = toString(left(title, length(title)-6))) ~> YearExtraction"
+				"          title = toString(left(title, length(title)-6))) ~> YearExtraction",
+				"YearExtraction sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['movies-clean.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> MoviesClean"
 			]
 		}
 	}
