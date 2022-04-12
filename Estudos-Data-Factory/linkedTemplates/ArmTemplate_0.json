@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
 		},
+		"Blob_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Blob'"
+		},
 		"triggerblob_properties_pipeline1_parameters_FileName": {
 			"type": "string",
 			"defaultValue": "@triggerBody().fileName"
@@ -33,6 +37,19 @@
 				"type": "AzureBlobStorage",
 				"typeProperties": {
 					"connectionString": "[parameters('AzureBlobStorage1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Blob')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('Blob_connectionString')]"
 				}
 			},
 			"dependsOn": []
@@ -107,6 +124,74 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/InputMoviesCSV')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Blob",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "movies.csv",
+						"container": "input"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "movieId",
+						"type": "String"
+					},
+					{
+						"name": "title",
+						"type": "String"
+					},
+					{
+						"name": "genres",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Blob')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OutputMoviesCSV')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Blob",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "output"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Blob')]"
 			]
 		},
 		{
@@ -195,11 +280,92 @@
 						"type": "string"
 					}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2022-04-11T19:27:44Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/InputCSV')]",
 				"[concat(variables('factoryId'), '/datasets/outputCSV')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MoviesCleanFlow')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "InputMoviesCSV",
+								"type": "DatasetReference"
+							},
+							"name": "Movies"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "OutputMoviesCSV",
+								"type": "DatasetReference"
+							},
+							"name": "MoviesClean"
+						},
+						{
+							"dataset": {
+								"referenceName": "OutputMoviesCSV",
+								"type": "DatasetReference"
+							},
+							"name": "MoviesByYearCount"
+						}
+					],
+					"transformations": [
+						{
+							"name": "YearExtraction"
+						},
+						{
+							"name": "MoviesByYear"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          movieId as string,",
+						"          title as string,",
+						"          genres as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> Movies",
+						"Movies derive(Year = toInteger(trim(right(title, 6), '()')),",
+						"          title = toString(left(title, length(title)-6))) ~> YearExtraction",
+						"YearExtraction aggregate(groupBy(Year),",
+						"     MoviesCount = count(),",
+						"     partitionBy('hash', 1)) ~> MoviesByYear",
+						"YearExtraction sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     partitionFileNames:['movies-clean.csv'],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     mapColumn(",
+						"          movieId,",
+						"          title,",
+						"          genres,",
+						"          Year",
+						"     ),",
+						"     partitionBy('hash', 1)) ~> MoviesClean",
+						"MoviesByYear sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     partitionFileNames:['movies-by-year.csv'],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     partitionBy('hash', 1)) ~> MoviesByYearCount"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/InputMoviesCSV')]",
+				"[concat(variables('factoryId'), '/datasets/OutputMoviesCSV')]"
 			]
 		},
 		{
@@ -232,6 +398,54 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/pipeline1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline2')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "MoviesCleanFlow",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"Movies": {},
+									"MoviesClean": {},
+									"MoviesByYearCount": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/MoviesCleanFlow')]"
 			]
 		}
 	]
