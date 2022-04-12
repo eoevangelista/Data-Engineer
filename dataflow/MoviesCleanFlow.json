@@ -24,6 +24,9 @@
 			"transformations": [
 				{
 					"name": "YearExtraction"
+				},
+				{
+					"name": "MoviesByYear"
 				}
 			],
 			"scriptLines": [
@@ -37,11 +40,14 @@
 				"     ignoreNoFilesFound: false) ~> Movies",
 				"Movies derive(Year = toInteger(trim(right(title, 6), '()')),",
 				"          title = toString(left(title, length(title)-6))) ~> YearExtraction",
+				"YearExtraction aggregate(groupBy(Year),",
+				"     MoviesCount = count()) ~> MoviesByYear",
 				"YearExtraction sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     partitionFileNames:['movies-clean.csv'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> MoviesClean"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> MoviesClean"
 			]
 		}
 	}
