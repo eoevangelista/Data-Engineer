@@ -59,7 +59,8 @@
 				"     validateSchema: false,",
 				"     partitionFileNames:['movies-by-year.csv'],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> MoviesByYearCount"
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> MoviesByYearCount"
 			]
 		}
 	}
