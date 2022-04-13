@@ -11,7 +11,16 @@
 		"Blob_connectionString": {
 			"value": ""
 		},
-		"triggerblob_properties_pipeline1_parameters_FileName": {
+		"FileServer1_password": {
+			"value": ""
+		},
+		"FileServer1_properties_typeProperties_host": {
+			"value": "D:\\Engenharia de Dados\\DataFactory"
+		},
+		"FileServer1_properties_typeProperties_userId": {
+			"value": "azure"
+		},
+		"triggerblob_properties_pipeline1Trigger_parameters_FileName": {
 			"value": "@triggerBody().fileName"
 		},
 		"triggerblob_properties_typeProperties_scope": {
