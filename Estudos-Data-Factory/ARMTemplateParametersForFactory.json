@@ -14,6 +14,12 @@
 		"FileServer1_password": {
 			"value": ""
 		},
+		"AzureSqlDatabase1_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage2_connectionString": {
+			"value": ""
+		},
 		"FileServer1_properties_typeProperties_host": {
 			"value": "D:\\Engenharia de Dados\\DataFactory"
 		},
