@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"Filename": {
+			"FileName": {
 				"type": "string",
 				"defaultValue": "dbo_Cars.csv"
 			}
@@ -17,7 +17,7 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": {
-					"value": "@dataset().Filename",
+					"value": "@dataset().FileName",
 					"type": "Expression"
 				},
 				"container": "exported-data"
