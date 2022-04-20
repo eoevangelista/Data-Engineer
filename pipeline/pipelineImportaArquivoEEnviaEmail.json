@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "cp1",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -28,6 +28,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
+						"preCopyScript": "truncate table dbo.cars",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": true,
 						"disableMetricsCollection": false
@@ -110,6 +111,34 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "Send Email Failure",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "cp1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-31.eastus.logic.azure.com:443/workflows/e09afcdf822942b1917557dac87048c1/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=3ufkm2h5iaToX5FDz5VcTDf1TsuBnZcD8eUACc4Kw-A",
+					"method": "POST",
+					"body": {
+						"value": "{\n    \"title\": \" FAILED!\",\n    \"message\": \"Error: @{variables('FileSource')} \",\n    \"color\": \"Red\",\n    \"dataFactoryName\": \"@{pipeline().DataFactory}\",\n    \"pipelineName\": \" \",\n    \"pipelineRunId\": \" \",\n    \"time\": \"@{utcnow()}\"\n    }",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"variables": {
