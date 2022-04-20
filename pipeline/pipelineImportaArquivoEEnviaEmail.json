@@ -98,7 +98,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"FileName": {
-								"value": "@variables('Filename')",
+								"value": "@variables('FileSource')",
 								"type": "Expression"
 							}
 						}
@@ -113,7 +113,7 @@
 			}
 		],
 		"variables": {
-			"Filename": {
+			"FileSource": {
 				"type": "String",
 				"defaultValue": "dbo_Cars.csv"
 			}
