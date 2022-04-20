@@ -97,8 +97,8 @@
 						"referenceName": "ArquivoCSV",
 						"type": "DatasetReference",
 						"parameters": {
-							"Filename": {
-								"value": "@variables('filename')",
+							"FileName": {
+								"value": "@variables('Filename')",
 								"type": "Expression"
 							}
 						}
@@ -113,8 +113,9 @@
 			}
 		],
 		"variables": {
-			"filename": {
-				"type": "String"
+			"Filename": {
+				"type": "String",
+				"defaultValue": "dbo_Cars.csv"
 			}
 		},
 		"annotations": []
