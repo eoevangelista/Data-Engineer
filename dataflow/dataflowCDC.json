@@ -1,5 +1,5 @@
 {
-	"name": "dataflow_CDC",
+	"name": "dataflowCDC",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
