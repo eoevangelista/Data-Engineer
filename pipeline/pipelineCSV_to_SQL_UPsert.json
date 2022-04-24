@@ -1,5 +1,5 @@
 {
-	"name": "pipelineCSV_to_SQL",
+	"name": "pipelineCSV_to_SQL_UPsert",
 	"properties": {
 		"activities": [
 			{
