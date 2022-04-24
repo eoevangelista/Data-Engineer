@@ -94,7 +94,7 @@
 								"ID"
 							]
 						},
-						"sqlWriterUseTableLock": true,
+						"sqlWriterUseTableLock": false,
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
