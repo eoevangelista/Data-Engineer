@@ -2,7 +2,7 @@
 	"name": "TableList",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "SQLMovies",
+			"referenceName": "SQLTableCars",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
