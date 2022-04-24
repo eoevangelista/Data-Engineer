@@ -24,7 +24,7 @@
 			"transformations": [],
 			"scriptLines": [
 				"source(output(",
-				"          movieId as short,",
+				"          movieId as short '000',",
 				"          title as string,",
 				"          genres as string",
 				"     ),",
