@@ -49,12 +49,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError',",
-				"     mapColumn(",
-				"          ID = movieId,",
-				"          Title = title,",
-				"          Genres = genres",
-				"     )) ~> MoviesSQL"
+				"     errorHandlingOption: 'stopOnFirstError') ~> MoviesSQL"
 			]
 		}
 	}
