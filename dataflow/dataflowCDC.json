@@ -33,7 +33,7 @@
 				"     ignoreNoFilesFound: false,",
 				"     enableCdc: true,",
 				"     mode: 'read',",
-				"     skipInitialLoad: false) ~> MoviesCSV",
+				"     skipInitialLoad: true) ~> MoviesCSV",
 				"MoviesCSV sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
