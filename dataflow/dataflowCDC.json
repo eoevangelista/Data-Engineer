@@ -33,8 +33,7 @@
 				"     ignoreNoFilesFound: false,",
 				"     enableCdc: true,",
 				"     mode: 'read',",
-				"     skipInitialLoad: true,",
-				"     multiLineRow: true) ~> MoviesCSV",
+				"     skipInitialLoad: true) ~> MoviesCSV",
 				"MoviesCSV sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -49,7 +48,12 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> MoviesSQL"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          ID = movieId,",
+				"          Title = title,",
+				"          Genres = genres",
+				"     )) ~> MoviesSQL"
 			]
 		}
 	}
