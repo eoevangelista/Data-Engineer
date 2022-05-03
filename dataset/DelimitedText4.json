@@ -15,7 +15,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Cars.csv",
 				"container": "input"
 			},
 			"columnDelimiter": ",",
