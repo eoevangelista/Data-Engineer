@@ -144,12 +144,6 @@
 					},
 					"FileServer1_properties_typeProperties_userId": {
 						"value": "[parameters('FileServer1_properties_typeProperties_userId')]"
-					},
-					"triggerNameFile_properties_pipelineTestaTrigger_parameters_FileName": {
-						"value": "[parameters('triggerNameFile_properties_pipelineTestaTrigger_parameters_FileName')]"
-					},
-					"triggerNameFile_properties_typeProperties_scope": {
-						"value": "[parameters('triggerNameFile_properties_typeProperties_scope')]"
 					}
 				}
 			},
@@ -170,6 +164,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"triggerNameFile_properties_pipelineTestaTrigger_parameters_FileName": {
+						"value": "[parameters('triggerNameFile_properties_pipelineTestaTrigger_parameters_FileName')]"
+					},
+					"triggerNameFile_properties_typeProperties_scope": {
+						"value": "[parameters('triggerNameFile_properties_typeProperties_scope')]"
 					},
 					"triggerblob_properties_pipeline1Trigger_parameters_FileName": {
 						"value": "[parameters('triggerblob_properties_pipeline1Trigger_parameters_FileName')]"
