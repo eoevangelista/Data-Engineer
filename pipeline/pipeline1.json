@@ -14,7 +14,7 @@
 					},
 					"cases": [
 						{
-							"value": "Test1.csv",
+							"value": "Test1",
 							"activities": [
 								{
 									"name": "Wait Test1",
