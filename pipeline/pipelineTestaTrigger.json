@@ -9,12 +9,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"on": {
-						"value": "@pipeline().parameters.FileName",
+						"value": "@substring(pipeline().parameters.FileName,0,indexOf(pipeline().parameters.FileName,'.'))",
 						"type": "Expression"
 					},
 					"cases": [
 						{
-							"value": "23423423.csv",
+							"value": "23423423",
 							"activities": [
 								{
 									"name": "pipeline23423423",
@@ -32,7 +32,7 @@
 							]
 						},
 						{
-							"value": "blabalb.csv",
+							"value": "blabalb",
 							"activities": [
 								{
 									"name": "pipelineblabalb",
@@ -50,7 +50,7 @@
 							]
 						},
 						{
-							"value": "Test1.csv",
+							"value": "Test1",
 							"activities": [
 								{
 									"name": "pipelineTest1",
@@ -68,7 +68,7 @@
 							]
 						},
 						{
-							"value": "ast2asd.csv",
+							"value": "ast2asd",
 							"activities": [
 								{
 									"name": "pipelineast2asd",
