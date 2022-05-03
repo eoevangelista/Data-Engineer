@@ -9,18 +9,39 @@
 				"userProperties": [],
 				"typeProperties": {
 					"on": {
-						"value": "@pipeline().parameters.sourceFile",
+						"value": "@triggerBody().fileName",
 						"type": "Expression"
 					},
-					"cases": []
+					"cases": [
+						{
+							"value": "Test1.csv",
+							"activities": [
+								{
+									"name": "Wait Test1",
+									"type": "Wait",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"waitTimeInSeconds": 1
+									}
+								}
+							]
+						}
+					],
+					"defaultActivities": [
+						{
+							"name": "Wait1",
+							"type": "Wait",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 1
+							}
+						}
+					]
 				}
 			}
 		],
-		"parameters": {
-			"sourceFile": {
-				"type": "string"
-			}
-		},
 		"annotations": []
 	}
 }
