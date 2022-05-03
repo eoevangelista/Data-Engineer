@@ -7,9 +7,21 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "Estudos-Data-Factory"
 		},
+		"ArquivoBlobCSV_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ArquivoBlobCSV'"
+		},
 		"AzureBlobStorage1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
+		},
+		"AzureBlobStorage2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage2'"
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
 		},
 		"Blob_connectionString": {
 			"type": "secureString",
@@ -19,13 +31,17 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'FileServer1'"
 		},
-		"AzureSqlDatabase1_connectionString": {
+		"LS_SQL_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
+			"metadata": "Secure string for 'connectionString' of 'LS_SQL'"
 		},
-		"AzureBlobStorage2_connectionString": {
+		"MyBlob_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage2'"
+			"metadata": "Secure string for 'connectionString' of 'MyBlob'"
+		},
+		"SQLTableCars_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SQLTableCars'"
 		},
 		"FileServer1_properties_typeProperties_host": {
 			"type": "string",
@@ -34,6 +50,14 @@
 		"FileServer1_properties_typeProperties_userId": {
 			"type": "string",
 			"defaultValue": "azure"
+		},
+		"triggerNameFile_properties_pipelineTestaTrigger_parameters_FileName": {
+			"type": "string",
+			"defaultValue": "@triggerBody().fileName"
+		},
+		"triggerNameFile_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/c1c220f9-ee03-4e05-8c17-d6252e384214/resourceGroups/estudos/providers/Microsoft.Storage/storageAccounts/asftriggerdemo"
 		},
 		"triggerblob_properties_pipeline1Trigger_parameters_FileName": {
 			"type": "string",
@@ -70,26 +94,29 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"ArquivoBlobCSV_connectionString": {
+						"value": "[parameters('ArquivoBlobCSV_connectionString')]"
+					},
 					"AzureBlobStorage1_connectionString": {
 						"value": "[parameters('AzureBlobStorage1_connectionString')]"
-					},
-					"Blob_connectionString": {
-						"value": "[parameters('Blob_connectionString')]"
-					},
-					"AzureSqlDatabase1_connectionString": {
-						"value": "[parameters('AzureSqlDatabase1_connectionString')]"
 					},
 					"AzureBlobStorage2_connectionString": {
 						"value": "[parameters('AzureBlobStorage2_connectionString')]"
 					},
-					"FileServer1_password": {
-						"value": "[parameters('FileServer1_password')]"
+					"AzureSqlDatabase1_connectionString": {
+						"value": "[parameters('AzureSqlDatabase1_connectionString')]"
 					},
-					"FileServer1_properties_typeProperties_host": {
-						"value": "[parameters('FileServer1_properties_typeProperties_host')]"
+					"Blob_connectionString": {
+						"value": "[parameters('Blob_connectionString')]"
 					},
-					"FileServer1_properties_typeProperties_userId": {
-						"value": "[parameters('FileServer1_properties_typeProperties_userId')]"
+					"LS_SQL_connectionString": {
+						"value": "[parameters('LS_SQL_connectionString')]"
+					},
+					"MyBlob_connectionString": {
+						"value": "[parameters('MyBlob_connectionString')]"
+					},
+					"SQLTableCars_connectionString": {
+						"value": "[parameters('SQLTableCars_connectionString')]"
 					}
 				}
 			},
@@ -109,6 +136,41 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"FileServer1_password": {
+						"value": "[parameters('FileServer1_password')]"
+					},
+					"FileServer1_properties_typeProperties_host": {
+						"value": "[parameters('FileServer1_properties_typeProperties_host')]"
+					},
+					"FileServer1_properties_typeProperties_userId": {
+						"value": "[parameters('FileServer1_properties_typeProperties_userId')]"
+					},
+					"triggerNameFile_properties_pipelineTestaTrigger_parameters_FileName": {
+						"value": "[parameters('triggerNameFile_properties_pipelineTestaTrigger_parameters_FileName')]"
+					},
+					"triggerNameFile_properties_typeProperties_scope": {
+						"value": "[parameters('triggerNameFile_properties_typeProperties_scope')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'Estudos-Data-Factory_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "Estudos-Data-Factory_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
 					"triggerblob_properties_pipeline1Trigger_parameters_FileName": {
 						"value": "[parameters('triggerblob_properties_pipeline1Trigger_parameters_FileName')]"
 					},
@@ -118,7 +180,7 @@
 				}
 			},
 			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'Estudos-Data-Factory_ArmTemplate_0')]"
+				"[resourceId('Microsoft.Resources/deployments', 'Estudos-Data-Factory_ArmTemplate_1')]"
 			]
 		}
 	]

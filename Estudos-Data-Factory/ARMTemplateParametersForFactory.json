@@ -5,7 +5,16 @@
 		"factoryName": {
 			"value": "Estudos-Data-Factory"
 		},
+		"ArquivoBlobCSV_connectionString": {
+			"value": ""
+		},
 		"AzureBlobStorage1_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage2_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase1_connectionString": {
 			"value": ""
 		},
 		"Blob_connectionString": {
@@ -14,10 +23,13 @@
 		"FileServer1_password": {
 			"value": ""
 		},
-		"AzureSqlDatabase1_connectionString": {
+		"LS_SQL_connectionString": {
 			"value": ""
 		},
-		"AzureBlobStorage2_connectionString": {
+		"MyBlob_connectionString": {
+			"value": ""
+		},
+		"SQLTableCars_connectionString": {
 			"value": ""
 		},
 		"FileServer1_properties_typeProperties_host": {
@@ -25,6 +37,12 @@
 		},
 		"FileServer1_properties_typeProperties_userId": {
 			"value": "azure"
+		},
+		"triggerNameFile_properties_pipelineTestaTrigger_parameters_FileName": {
+			"value": "@triggerBody().fileName"
+		},
+		"triggerNameFile_properties_typeProperties_scope": {
+			"value": "/subscriptions/c1c220f9-ee03-4e05-8c17-d6252e384214/resourceGroups/estudos/providers/Microsoft.Storage/storageAccounts/asftriggerdemo"
 		},
 		"triggerblob_properties_pipeline1Trigger_parameters_FileName": {
 			"value": "@triggerBody().fileName"
