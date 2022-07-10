@@ -18,11 +18,7 @@
 						"referenceName": "sql_users",
 						"type": "DatasetReference"
 					},
-					"name": "sinkuser",
-					"rejectedDataLinkedService": {
-						"referenceName": "stride",
-						"type": "LinkedServiceReference"
-					}
+					"name": "sinkuser"
 				}
 			],
 			"transformations": [
