@@ -1,0 +1,54 @@
+{
+	"name": "jsn_authors",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "stride",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "authors.json",
+				"container": "authors"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"metadata": {
+					"type": "object",
+					"properties": {
+						"name": {
+							"type": "string"
+						},
+						"birth_date": {
+							"type": "string"
+						},
+						"died_at": {
+							"type": "string"
+						}
+					}
+				},
+				"nationalities": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "null"
+							},
+							"label": {
+								"type": "string"
+							},
+							"slug": {
+								"type": "string"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
