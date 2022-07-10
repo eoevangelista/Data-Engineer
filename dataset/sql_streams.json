@@ -9,22 +9,25 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "title",
+				"name": "movie_title",
 				"type": "varchar"
 			},
 			{
-				"name": "duration_mins",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "original_language",
+				"name": "user_email",
 				"type": "varchar"
 			},
 			{
 				"name": "size_mb",
-				"type": "int",
-				"precision": 10
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "start_at",
+				"type": "varchar"
+			},
+			{
+				"name": "end_at",
+				"type": "varchar"
 			}
 		],
 		"typeProperties": {

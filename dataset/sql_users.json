@@ -9,22 +9,16 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "title",
+				"name": "first_name",
 				"type": "varchar"
 			},
 			{
-				"name": "duration_mins",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "original_language",
+				"name": "last_name",
 				"type": "varchar"
 			},
 			{
-				"name": "size_mb",
-				"type": "int",
-				"precision": 10
+				"name": "email",
+				"type": "varchar"
 			}
 		],
 		"typeProperties": {
