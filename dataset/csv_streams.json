@@ -10,8 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "streams.csv",
-				"container": "strider"
+				"container": "streams"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
