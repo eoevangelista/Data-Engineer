@@ -1,0 +1,74 @@
+{
+	"name": "df_movies",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "csv_movies",
+						"type": "DatasetReference"
+					},
+					"name": "csvmovie"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "sql_movies",
+						"type": "DatasetReference"
+					},
+					"name": "sinkmovies",
+					"rejectedDataLinkedService": {
+						"referenceName": "stride",
+						"type": "LinkedServiceReference"
+					}
+				}
+			],
+			"transformations": [
+				{
+					"name": "AlterRow"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          title as string,",
+				"          duration_mins as string,",
+				"          original_language as string,",
+				"          size_mb as string",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     enableCdc: true,",
+				"     mode: 'read',",
+				"     skipInitialLoad: true) ~> csvmovie",
+				"csvmovie alterRow(upsertIf(true()),",
+				"     insertIf(true())) ~> AlterRow",
+				"AlterRow sink(allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     input(",
+				"          title as string,",
+				"          duration_mins as integer,",
+				"          original_language as string,",
+				"          size_mb as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['title'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          title,",
+				"          duration_mins,",
+				"          original_language,",
+				"          size_mb",
+				"     )) ~> sinkmovies"
+			]
+		}
+	}
+}
