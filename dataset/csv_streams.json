@@ -1,0 +1,44 @@
+{
+	"name": "csv_streams",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "stride",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "streams.csv",
+				"container": "strider"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "movie_title",
+				"type": "String"
+			},
+			{
+				"name": "user_email",
+				"type": "String"
+			},
+			{
+				"name": "size_mb",
+				"type": "String"
+			},
+			{
+				"name": "start_at",
+				"type": "String"
+			},
+			{
+				"name": "end_at",
+				"type": "String"
+			}
+		]
+	}
+}
