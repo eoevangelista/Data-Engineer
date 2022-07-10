@@ -1,0 +1,35 @@
+{
+	"name": "sql_streams",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureStride",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "title",
+				"type": "varchar"
+			},
+			{
+				"name": "duration_mins",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "original_language",
+				"type": "varchar"
+			},
+			{
+				"name": "size_mb",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Streams"
+		}
+	}
+}
