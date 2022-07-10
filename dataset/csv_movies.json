@@ -1,5 +1,5 @@
 {
-	"name": "Movies",
+	"name": "csv_movies",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "stride",
