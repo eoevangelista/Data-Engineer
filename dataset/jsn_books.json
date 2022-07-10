@@ -1,0 +1,35 @@
+{
+	"name": "jsn_books",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "stride",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "books.json",
+				"container": "strider"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"name": {
+					"type": "string"
+				},
+				"pages": {
+					"type": "integer"
+				},
+				"author": {
+					"type": "string"
+				},
+				"publisher": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}
