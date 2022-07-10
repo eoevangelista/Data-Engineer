@@ -1,0 +1,69 @@
+{
+	"name": "df_authors",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "jsn_authors",
+						"type": "DatasetReference"
+					},
+					"name": "jsnauthors"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "sql_books",
+						"type": "DatasetReference"
+					},
+					"name": "sinkauthors"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AlterRow"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          metadata as (name as string, birth_date as string, died_at as string),",
+				"          nationalities as (id as string, label as string, slug as string)[]",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     enableCdc: true,",
+				"     mode: 'read',",
+				"     skipInitialLoad: false,",
+				"     documentForm: 'documentPerLine') ~> jsnauthors",
+				"jsnauthors alterRow(upsertIf(true()),",
+				"     insertIf(true())) ~> AlterRow",
+				"AlterRow sink(allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     input(",
+				"          name as string,",
+				"          pages as integer,",
+				"          author as string,",
+				"          publisher as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['name'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          name,",
+				"          pages,",
+				"          author,",
+				"          publisher",
+				"     )) ~> sinkauthors"
+			]
+		}
+	}
+}
