@@ -1,0 +1,40 @@
+{
+	"name": "Movies",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "stride",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "movies.csv",
+				"container": "strider"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "title",
+				"type": "String"
+			},
+			{
+				"name": "duration_mins",
+				"type": "String"
+			},
+			{
+				"name": "original_language",
+				"type": "String"
+			},
+			{
+				"name": "size_mb",
+				"type": "String"
+			}
+		]
+	}
+}
