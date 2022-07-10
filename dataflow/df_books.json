@@ -1,0 +1,71 @@
+{
+	"name": "df_books",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "jsn_books",
+						"type": "DatasetReference"
+					},
+					"name": "jsnbooks"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "sql_books",
+						"type": "DatasetReference"
+					},
+					"name": "sinkbooks"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AlterRow"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          name as string,",
+				"          pages as integer,",
+				"          author as string,",
+				"          publisher as string",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     enableCdc: true,",
+				"     mode: 'read',",
+				"     skipInitialLoad: false,",
+				"     documentForm: 'documentPerLine') ~> jsnbooks",
+				"jsnbooks alterRow(upsertIf(true()),",
+				"     insertIf(true())) ~> AlterRow",
+				"AlterRow sink(allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     input(",
+				"          name as string,",
+				"          pages as integer,",
+				"          author as string,",
+				"          publisher as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['name'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          name,",
+				"          pages,",
+				"          author,",
+				"          publisher",
+				"     )) ~> sinkbooks"
+			]
+		}
+	}
+}
