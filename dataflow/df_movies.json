@@ -42,7 +42,7 @@
 				"     ignoreNoFilesFound: false,",
 				"     enableCdc: true,",
 				"     mode: 'read',",
-				"     skipInitialLoad: false) ~> csvmovie",
+				"     skipInitialLoad: true) ~> csvmovie",
 				"csvmovie alterRow(upsertIf(true()),",
 				"     insertIf(true())) ~> AlterRow",
 				"AlterRow sink(allowSchemaDrift: false,",
