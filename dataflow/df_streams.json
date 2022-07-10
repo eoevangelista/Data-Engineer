@@ -18,11 +18,7 @@
 						"referenceName": "sql_streams",
 						"type": "DatasetReference"
 					},
-					"name": "sinkstreams",
-					"rejectedDataLinkedService": {
-						"referenceName": "stride",
-						"type": "LinkedServiceReference"
-					}
+					"name": "sinkstreams"
 				}
 			],
 			"transformations": [
