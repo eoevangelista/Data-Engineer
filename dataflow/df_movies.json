@@ -18,11 +18,7 @@
 						"referenceName": "sql_movies",
 						"type": "DatasetReference"
 					},
-					"name": "sinkmovies",
-					"rejectedDataLinkedService": {
-						"referenceName": "stride",
-						"type": "LinkedServiceReference"
-					}
+					"name": "sinkmovies"
 				}
 			],
 			"transformations": [
