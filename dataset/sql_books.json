@@ -1,0 +1,34 @@
+{
+	"name": "sql_books",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureStride",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "name",
+				"type": "varchar"
+			},
+			{
+				"name": "pages",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "author",
+				"type": "varchar"
+			},
+			{
+				"name": "publisher",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Books"
+		}
+	}
+}
