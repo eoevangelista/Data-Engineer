@@ -1,0 +1,84 @@
+{
+	"name": "jsn_reviews",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "stride",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "reviews.json",
+				"container": "reviews"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"content": {
+					"type": "object",
+					"properties": {
+						"text": {
+							"type": "string"
+						}
+					}
+				},
+				"rating": {
+					"type": "object",
+					"properties": {
+						"rate": {
+							"type": "integer"
+						},
+						"label": {
+							"type": "string"
+						}
+					}
+				},
+				"books": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "null"
+							},
+							"metadata": {
+								"type": "object",
+								"properties": {
+									"title": {
+										"type": "string"
+									},
+									"pages": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				},
+				"movies": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "integer"
+							},
+							"title": {
+								"type": "string"
+							}
+						}
+					}
+				},
+				"updated": {
+					"type": "string"
+				},
+				"created": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}
