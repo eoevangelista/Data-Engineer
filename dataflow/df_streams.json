@@ -1,0 +1,77 @@
+{
+	"name": "df_streams",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "csv_streams",
+						"type": "DatasetReference"
+					},
+					"name": "csvstreams"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "sql_streams",
+						"type": "DatasetReference"
+					},
+					"name": "sinkstreams",
+					"rejectedDataLinkedService": {
+						"referenceName": "stride",
+						"type": "LinkedServiceReference"
+					}
+				}
+			],
+			"transformations": [
+				{
+					"name": "AlterRow"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          movie_title as string,",
+				"          user_email as string,",
+				"          size_mb as double,",
+				"          start_at as string,",
+				"          end_at as string",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     enableCdc: true,",
+				"     mode: 'read',",
+				"     skipInitialLoad: false) ~> csvstreams",
+				"csvstreams alterRow(upsertIf(true()),",
+				"     insertIf(true())) ~> AlterRow",
+				"AlterRow sink(allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     input(",
+				"          movie_title as string,",
+				"          user_email as string,",
+				"          size_mb as double,",
+				"          start_at as string,",
+				"          end_at as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['movie_title','user_email','start_at'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          movie_title,",
+				"          user_email,",
+				"          size_mb,",
+				"          start_at,",
+				"          end_at",
+				"     )) ~> sinkstreams"
+			]
+		}
+	}
+}
