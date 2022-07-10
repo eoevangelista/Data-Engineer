@@ -1,0 +1,71 @@
+{
+	"name": "df_user",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "csv_users",
+						"type": "DatasetReference"
+					},
+					"name": "csvuser"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "sql_users",
+						"type": "DatasetReference"
+					},
+					"name": "sinkuser",
+					"rejectedDataLinkedService": {
+						"referenceName": "stride",
+						"type": "LinkedServiceReference"
+					}
+				}
+			],
+			"transformations": [
+				{
+					"name": "AlterRow"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          first_name as string,",
+				"          last_name as string,",
+				"          email as string",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     enableCdc: true,",
+				"     mode: 'read',",
+				"     skipInitialLoad: false) ~> csvuser",
+				"csvuser alterRow(upsertIf(true()),",
+				"     insertIf(true())) ~> AlterRow",
+				"AlterRow sink(allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     input(",
+				"          first_name as string,",
+				"          last_name as string,",
+				"          email as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['email'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          first_name,",
+				"          last_name,",
+				"          email",
+				"     )) ~> sinkuser"
+			]
+		}
+	}
+}
