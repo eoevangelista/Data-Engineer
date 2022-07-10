@@ -10,8 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "books.json",
-				"container": "strider"
+				"container": "books"
 			}
 		},
 		"schema": {
