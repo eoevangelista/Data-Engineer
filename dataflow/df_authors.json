@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "sql_books",
+						"referenceName": "sql_authors",
 						"type": "DatasetReference"
 					},
 					"name": "sinkauthors"
@@ -28,7 +28,7 @@
 			],
 			"scriptLines": [
 				"source(output(",
-				"          metadata as (name as string, birth_date as string, died_at as string),",
+				"          metadata as (birth_date as string, died_at as string, name as string),",
 				"          nationalities as (id as string, label as string, slug as string)[]",
 				"     ),",
 				"     allowSchemaDrift: false,",
@@ -44,9 +44,10 @@
 				"     validateSchema: false,",
 				"     input(",
 				"          name as string,",
-				"          pages as integer,",
-				"          author as string,",
-				"          publisher as string",
+				"          birth_date as string,",
+				"          died_at as string,",
+				"          label as string,",
+				"          slug as string",
 				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",
@@ -58,10 +59,11 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
-				"          name,",
-				"          pages,",
-				"          author,",
-				"          publisher",
+				"          name = metadata.name,",
+				"          birth_date = metadata.birth_date,",
+				"          died_at = metadata.died_at,",
+				"          label = nationalities[1].label,",
+				"          slug = nationalities[1].slug",
 				"     )) ~> sinkauthors"
 			]
 		}
