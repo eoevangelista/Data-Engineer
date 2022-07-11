@@ -14,10 +14,6 @@
 		"stride_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'stride'"
-		},
-		"trg_stride_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/c1c220f9-ee03-4e05-8c17-d6252e384214/resourceGroups/estudos/providers/Microsoft.Storage/storageAccounts/estudosa52e"
 		}
 	},
 	"variables": {
@@ -95,46 +91,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/sql_movies')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureStride",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "title",
-						"type": "varchar"
-					},
-					{
-						"name": "duration_mins",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "original_language",
-						"type": "varchar"
-					},
-					{
-						"name": "size_mb",
-						"type": "int",
-						"precision": 10
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "Movies"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureStride')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/csv_streams')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -183,6 +139,310 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/csv_users')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "stride",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "users"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "first_name",
+						"type": "String"
+					},
+					{
+						"name": "last_name",
+						"type": "String"
+					},
+					{
+						"name": "email",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/stride')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/jsn_authors')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "stride",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "authors"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"metadata": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"type": "string"
+								},
+								"birth_date": {
+									"type": "string"
+								},
+								"died_at": {
+									"type": "string"
+								}
+							}
+						},
+						"nationalities": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"type": "null"
+									},
+									"label": {
+										"type": "string"
+									},
+									"slug": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/stride')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/jsn_books')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "stride",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "books"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"name": {
+							"type": "string"
+						},
+						"pages": {
+							"type": "integer"
+						},
+						"author": {
+							"type": "string"
+						},
+						"publisher": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/stride')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/jsn_reviews')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "stride",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "reviews"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"content": {
+							"type": "object",
+							"properties": {
+								"text": {
+									"type": "string"
+								}
+							}
+						},
+						"rating": {
+							"type": "object",
+							"properties": {
+								"rate": {
+									"type": "integer"
+								},
+								"label": {
+									"type": "string"
+								}
+							}
+						},
+						"books": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"type": "null"
+									},
+									"metadata": {
+										"type": "object",
+										"properties": {
+											"title": {
+												"type": "string"
+											},
+											"pages": {
+												"type": "string"
+											}
+										}
+									}
+								}
+							}
+						},
+						"movies": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"type": "integer"
+									},
+									"title": {
+										"type": "string"
+									}
+								}
+							}
+						},
+						"updated": {
+							"type": "string"
+						},
+						"created": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/stride')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sql_books')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureStride",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "name",
+						"type": "varchar"
+					},
+					{
+						"name": "pages",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "author",
+						"type": "varchar"
+					},
+					{
+						"name": "publisher",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Books"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureStride')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sql_movies')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureStride",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "title",
+						"type": "varchar"
+					},
+					{
+						"name": "duration_mins",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "original_language",
+						"type": "varchar"
+					},
+					{
+						"name": "size_mb",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Movies"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureStride')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/sql_streams')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -226,46 +486,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/csv_users')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "stride",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"container": "users"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "first_name",
-						"type": "String"
-					},
-					{
-						"name": "last_name",
-						"type": "String"
-					},
-					{
-						"name": "email",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/stride')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/sql_users')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -300,7 +520,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/sql_books')]",
+			"name": "[concat(parameters('factoryName'), '/sql_authors')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -316,22 +536,25 @@
 						"type": "varchar"
 					},
 					{
-						"name": "pages",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "author",
+						"name": "birth_date",
 						"type": "varchar"
 					},
 					{
-						"name": "publisher",
+						"name": "died_at",
+						"type": "varchar"
+					},
+					{
+						"name": "label",
+						"type": "varchar"
+					},
+					{
+						"name": "slug",
 						"type": "varchar"
 					}
 				],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "Books"
+					"table": "Authors"
 				}
 			},
 			"dependsOn": [
@@ -339,46 +562,58 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/jsn_books')]",
+			"name": "[concat(parameters('factoryName'), '/sql_reviews')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "stride",
+					"referenceName": "AzureStride",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "Json",
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "pages",
+						"type": "varchar"
+					},
+					{
+						"name": "books_title",
+						"type": "varchar"
+					},
+					{
+						"name": "text",
+						"type": "varchar"
+					},
+					{
+						"name": "movie_title",
+						"type": "varchar"
+					},
+					{
+						"name": "rating",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "updated",
+						"type": "varchar"
+					},
+					{
+						"name": "created",
+						"type": "varchar"
+					}
+				],
 				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"container": "books"
-					}
-				},
-				"schema": {
-					"type": "object",
-					"properties": {
-						"name": {
-							"type": "string"
-						},
-						"pages": {
-							"type": "integer"
-						},
-						"author": {
-							"type": "string"
-						},
-						"publisher": {
-							"type": "string"
-						}
-					}
+					"schema": "dbo",
+					"table": "Reviews"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/stride')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureStride')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/df_movies')]",
+			"name": "[concat(parameters('factoryName'), '/df_authors')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -387,19 +622,19 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "csv_movies",
+								"referenceName": "jsn_authors",
 								"type": "DatasetReference"
 							},
-							"name": "csvmovie"
+							"name": "jsnauthors"
 						}
 					],
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "sql_movies",
+								"referenceName": "sql_authors",
 								"type": "DatasetReference"
 							},
-							"name": "sinkmovies"
+							"name": "sinkauthors"
 						}
 					],
 					"transformations": [
@@ -409,48 +644,49 @@
 					],
 					"scriptLines": [
 						"source(output(",
-						"          title as string,",
-						"          duration_mins as string,",
-						"          original_language as string,",
-						"          size_mb as string",
+						"          metadata as (birth_date as string, died_at as string, name as string),",
+						"          nationalities as (id as string, label as string, slug as string)[]",
 						"     ),",
 						"     allowSchemaDrift: false,",
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false,",
 						"     enableCdc: true,",
 						"     mode: 'read',",
-						"     skipInitialLoad: true) ~> csvmovie",
-						"csvmovie alterRow(upsertIf(true()),",
+						"     skipInitialLoad: false,",
+						"     documentForm: 'documentPerLine') ~> jsnauthors",
+						"jsnauthors alterRow(upsertIf(true()),",
 						"     insertIf(true())) ~> AlterRow",
 						"AlterRow sink(allowSchemaDrift: false,",
 						"     validateSchema: false,",
 						"     input(",
-						"          title as string,",
-						"          duration_mins as integer,",
-						"          original_language as string,",
-						"          size_mb as integer",
+						"          name as string,",
+						"          birth_date as string,",
+						"          died_at as string,",
+						"          label as string,",
+						"          slug as string",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:true,",
-						"     keys:['title'],",
+						"     keys:['name'],",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
 						"     errorHandlingOption: 'stopOnFirstError',",
 						"     mapColumn(",
-						"          title,",
-						"          duration_mins,",
-						"          original_language,",
-						"          size_mb",
-						"     )) ~> sinkmovies"
+						"          name = metadata.name,",
+						"          birth_date = metadata.birth_date,",
+						"          died_at = metadata.died_at,",
+						"          label = nationalities[1].label,",
+						"          slug = nationalities[1].slug",
+						"     )) ~> sinkauthors"
 					]
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/csv_movies')]",
-				"[concat(variables('factoryId'), '/datasets/sql_movies')]"
+				"[concat(variables('factoryId'), '/datasets/jsn_authors')]",
+				"[concat(variables('factoryId'), '/datasets/sql_authors')]"
 			]
 		},
 		{
@@ -531,7 +767,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/df_user')]",
+			"name": "[concat(parameters('factoryName'), '/df_movies')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -540,19 +776,19 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "csv_users",
+								"referenceName": "csv_movies",
 								"type": "DatasetReference"
 							},
-							"name": "csvuser"
+							"name": "csvmovie"
 						}
 					],
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "sql_users",
+								"referenceName": "sql_movies",
 								"type": "DatasetReference"
 							},
-							"name": "sinkuser"
+							"name": "sinkmovies"
 						}
 					],
 					"transformations": [
@@ -562,45 +798,48 @@
 					],
 					"scriptLines": [
 						"source(output(",
-						"          first_name as string,",
-						"          last_name as string,",
-						"          email as string",
+						"          title as string,",
+						"          duration_mins as string,",
+						"          original_language as string,",
+						"          size_mb as string",
 						"     ),",
 						"     allowSchemaDrift: false,",
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false,",
 						"     enableCdc: true,",
 						"     mode: 'read',",
-						"     skipInitialLoad: false) ~> csvuser",
-						"csvuser alterRow(upsertIf(true()),",
+						"     skipInitialLoad: true) ~> csvmovie",
+						"csvmovie alterRow(upsertIf(true()),",
 						"     insertIf(true())) ~> AlterRow",
 						"AlterRow sink(allowSchemaDrift: false,",
 						"     validateSchema: false,",
 						"     input(",
-						"          first_name as string,",
-						"          last_name as string,",
-						"          email as string",
+						"          title as string,",
+						"          duration_mins as integer,",
+						"          original_language as string,",
+						"          size_mb as integer",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:true,",
-						"     keys:['email'],",
+						"     keys:['title'],",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
 						"     errorHandlingOption: 'stopOnFirstError',",
 						"     mapColumn(",
-						"          first_name,",
-						"          last_name,",
-						"          email",
-						"     )) ~> sinkuser"
+						"          title,",
+						"          duration_mins,",
+						"          original_language,",
+						"          size_mb",
+						"     )) ~> sinkmovies"
 					]
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/csv_users')]",
-				"[concat(variables('factoryId'), '/datasets/sql_users')]"
+				"[concat(variables('factoryId'), '/datasets/csv_movies')]",
+				"[concat(variables('factoryId'), '/datasets/sql_movies')]"
 			]
 		},
 		{
@@ -683,206 +922,161 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pl_stride')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/df_user')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "df_books",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "df_streams",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "1.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "df_books",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"jsnbooks": {},
-									"sinkbooks": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine",
-							"continuationSettings": {
-								"customizedCheckpointKey": "8eda244a-ebbf-4edc-b05b-167573750440"
-							}
-						}
-					},
-					{
-						"name": "df_movies",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "1.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "df_movies",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"csvmovie": {},
-									"sinkmovies": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine",
-							"continuationSettings": {
-								"customizedCheckpointKey": "3333dfc8-5937-4666-9b46-ace242d1600a"
-							}
-						}
-					},
-					{
-						"name": "df_user",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "df_movies",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "1.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "df_user",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"csvuser": {},
-									"sinkuser": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine",
-							"continuationSettings": {
-								"customizedCheckpointKey": "ebff4997-1c74-4d9a-9397-3e268dbc804e"
-							}
-						}
-					},
-					{
-						"name": "df_streams",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "df_user",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "1.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "df_streams",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"csvstreams": {},
-									"sinkstreams": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine",
-							"continuationSettings": {
-								"customizedCheckpointKey": "c07b55d9-06ee-4504-8164-680fe4ff6cb0"
-							}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/df_books')]",
-				"[concat(variables('factoryId'), '/dataflows/df_movies')]",
-				"[concat(variables('factoryId'), '/dataflows/df_user')]",
-				"[concat(variables('factoryId'), '/dataflows/df_streams')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/trg_stride')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "pl_stride",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "BlobEventsTrigger",
+				"type": "MappingDataFlow",
 				"typeProperties": {
-					"blobPathBeginsWith": "/strider/blobs/",
-					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('trg_stride_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobCreated"
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "csv_users",
+								"type": "DatasetReference"
+							},
+							"name": "csvuser"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "sql_users",
+								"type": "DatasetReference"
+							},
+							"name": "sinkuser"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AlterRow"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          first_name as string,",
+						"          last_name as string,",
+						"          email as string",
+						"     ),",
+						"     allowSchemaDrift: false,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     enableCdc: true,",
+						"     mode: 'read',",
+						"     skipInitialLoad: false) ~> csvuser",
+						"csvuser alterRow(upsertIf(true()),",
+						"     insertIf(true())) ~> AlterRow",
+						"AlterRow sink(allowSchemaDrift: false,",
+						"     validateSchema: false,",
+						"     input(",
+						"          first_name as string,",
+						"          last_name as string,",
+						"          email as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['email'],",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          first_name,",
+						"          last_name,",
+						"          email",
+						"     )) ~> sinkuser"
 					]
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/pl_stride')]"
+				"[concat(variables('factoryId'), '/datasets/csv_users')]",
+				"[concat(variables('factoryId'), '/datasets/sql_users')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_reviews')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "jsn_reviews",
+								"type": "DatasetReference"
+							},
+							"name": "jsnreviews"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "sql_reviews",
+								"type": "DatasetReference"
+							},
+							"name": "sinkreviews"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AlterRow"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          books as (id as string, metadata as (pages as string, title as string))[],",
+						"          content as (text as string),",
+						"          created as string,",
+						"          movies as (id as boolean, title as string)[],",
+						"          rating as (label as string, rate as short),",
+						"          updated as string",
+						"     ),",
+						"     allowSchemaDrift: false,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     enableCdc: true,",
+						"     mode: 'read',",
+						"     skipInitialLoad: false,",
+						"     documentForm: 'documentPerLine') ~> jsnreviews",
+						"jsnreviews alterRow(upsertIf(true()),",
+						"     insertIf(true())) ~> AlterRow",
+						"AlterRow sink(allowSchemaDrift: false,",
+						"     validateSchema: false,",
+						"     input(",
+						"          pages as string,",
+						"          books_title as string,",
+						"          text as string,",
+						"          movie_title as string,",
+						"          rating as integer,",
+						"          updated as string,",
+						"          created as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['text','books_title','movie_title','created'],",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          pages = books[1].metadata.pages,",
+						"          books_title = books[1].metadata.title,",
+						"          text = content.text,",
+						"          movie_title = movies[1].title,",
+						"          rating = rating.rate,",
+						"          updated,",
+						"          created",
+						"     )) ~> sinkreviews"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/jsn_reviews')]",
+				"[concat(variables('factoryId'), '/datasets/sql_reviews')]"
 			]
 		}
 	]
