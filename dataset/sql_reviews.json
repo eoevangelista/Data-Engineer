@@ -1,0 +1,46 @@
+{
+	"name": "sql_reviews",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureStride",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "pages",
+				"type": "varchar"
+			},
+			{
+				"name": "books_title",
+				"type": "varchar"
+			},
+			{
+				"name": "text",
+				"type": "varchar"
+			},
+			{
+				"name": "movie_title",
+				"type": "varchar"
+			},
+			{
+				"name": "rating",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "updated",
+				"type": "varchar"
+			},
+			{
+				"name": "created",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Reviews"
+		}
+	}
+}
