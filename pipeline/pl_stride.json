@@ -152,6 +152,40 @@
 						"customizedCheckpointKey": "cd92767d-f166-4190-9ef4-14f739e63272"
 					}
 				}
+			},
+			{
+				"name": "df_reviews",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "df_authors",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "1.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "df_reviews",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine",
+					"continuationSettings": {
+						"customizedCheckpointKey": "e8b9b02d-dbc3-4388-980b-be285549c9ea"
+					}
+				}
 			}
 		],
 		"annotations": []
