@@ -1,0 +1,37 @@
+{
+	"name": "sql_authors",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureStride",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "name",
+				"type": "varchar"
+			},
+			{
+				"name": "birth_date",
+				"type": "varchar"
+			},
+			{
+				"name": "died_at",
+				"type": "varchar"
+			},
+			{
+				"name": "label",
+				"type": "varchar"
+			},
+			{
+				"name": "slug",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Authors"
+		}
+	}
+}
