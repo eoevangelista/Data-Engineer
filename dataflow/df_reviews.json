@@ -1,0 +1,79 @@
+{
+	"name": "df_reviews",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "jsn_reviews",
+						"type": "DatasetReference"
+					},
+					"name": "jsnreviews"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "sql_reviews",
+						"type": "DatasetReference"
+					},
+					"name": "sinkauthors"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AlterRow"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          books as (id as string, metadata as (pages as string, title as string))[],",
+				"          content as (text as string),",
+				"          created as string,",
+				"          movies as (id as boolean, title as string)[],",
+				"          rating as (label as string, rate as short),",
+				"          updated as string",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     enableCdc: true,",
+				"     mode: 'read',",
+				"     skipInitialLoad: false,",
+				"     documentForm: 'documentPerLine') ~> jsnreviews",
+				"jsnreviews alterRow(upsertIf(true()),",
+				"     insertIf(true())) ~> AlterRow",
+				"AlterRow sink(allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     input(",
+				"          pages as string,",
+				"          books_title as string,",
+				"          text as string,",
+				"          movie_title as string,",
+				"          rating as integer,",
+				"          updated as string,",
+				"          created as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['text','books_title','movie_title','created'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          pages = books[1].metadata.pages,",
+				"          books_title = books[1].metadata.title,",
+				"          text = content.text,",
+				"          movie_title = movies[1].title,",
+				"          rating = rating.rate,",
+				"          updated,",
+				"          created",
+				"     )) ~> sinkauthors"
+			]
+		}
+	}
+}
