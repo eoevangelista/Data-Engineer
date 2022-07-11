@@ -30,10 +30,7 @@
 						"coreCount": 8,
 						"computeType": "General"
 					},
-					"traceLevel": "Fine",
-					"continuationSettings": {
-						"customizedCheckpointKey": "8eda244a-ebbf-4edc-b05b-167573750440"
-					}
+					"traceLevel": "Fine"
 				}
 			},
 			{
@@ -57,10 +54,7 @@
 						"coreCount": 8,
 						"computeType": "General"
 					},
-					"traceLevel": "Fine",
-					"continuationSettings": {
-						"customizedCheckpointKey": "3333dfc8-5937-4666-9b46-ace242d1600a"
-					}
+					"traceLevel": "Fine"
 				}
 			},
 			{
@@ -91,10 +85,7 @@
 						"coreCount": 8,
 						"computeType": "General"
 					},
-					"traceLevel": "Fine",
-					"continuationSettings": {
-						"customizedCheckpointKey": "ebff4997-1c74-4d9a-9397-3e268dbc804e"
-					}
+					"traceLevel": "Fine"
 				}
 			},
 			{
@@ -125,9 +116,40 @@
 						"coreCount": 8,
 						"computeType": "General"
 					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "df_authors",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "df_books",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "1.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "df_authors",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
 					"traceLevel": "Fine",
 					"continuationSettings": {
-						"customizedCheckpointKey": "c07b55d9-06ee-4504-8164-680fe4ff6cb0"
+						"customizedCheckpointKey": "cd92767d-f166-4190-9ef4-14f739e63272"
 					}
 				}
 			}
